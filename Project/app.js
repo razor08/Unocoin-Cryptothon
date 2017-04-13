@@ -2,7 +2,7 @@ var express = require("express"),
     morgan = require("morgan"),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
-    User = require("./models/user"),
+    Users = require("./models/users"),
     flash = require("connect-flash"),
     passport = require("passport"),
     LocalStrategy = require("passport-local");
@@ -11,7 +11,7 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
-mongoose.connect("mongodb://localhost/unicoin2");
+mongoose.connect("mongodb://localhost/unicoin3");
 app.use(flash());
 
 //Passport Configuration
@@ -21,16 +21,16 @@ app.use(require("express-session")({
     saveUninitialized: false
 }));
 app.use(function(req, res, next){
-   res.locals.currentUser = req.user;
+   res.locals.currentUsers = req.Users;
    res.locals.error = req.flash("error");
    res.locals.success = req.flash("success");
    next();
 });
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.use(new LocalStrategy(Users.authenticate()));
+passport.serializeUser(Users.serializeUser());
+passport.deserializeUser(Users.deserializeUser());
 
 
 var isLoggedIn = function (req, res, next) {
@@ -43,24 +43,24 @@ var isLoggedIn = function (req, res, next) {
 }
 
 app.use(bodyParser.json());
-var obj1 = new User({
-    username: "jaysinha.bestindwrld@gmail.com",
+var obj1 = new Users({
+    Usersname: "jaysinha.bestindwrld@gmail.com",
     password: "team45@890",
     accessToken: "",
     BTCBal: "",
     INRBal: ""
 });
 
-var obj2 = new User({
-    username: "rahulthebest.sinha@gmail.com",
+var obj2 = new Users({
+    Usersname: "rahulthebest.sinha@gmail.com",
     password: "team45@890",
     accessToken: "",
     BTCBal: "",
     INRBal: ""
 });
 
-var obj3 = new User({
-    username: "rahulthebest.form@gmail.com",
+var obj3 = new Users({
+    Usersname: "rahulthebest.form@gmail.com",
     password: "team45@890",
     accessToken: "",
     BTCBal: "",
@@ -68,31 +68,31 @@ var obj3 = new User({
 });
 
 app.get("/initiate1", function(req,res){
-   User.register(new User({username: obj1.username, BTCBal: obj1.BTCBal, INRBal:obj1.INRBal, accessToken: obj1.accessToken}), obj1.password ,function(err, user){
+   Users.register(new Users({Usersname: obj1.Usersname, BTCBal: obj1.BTCBal, INRBal:obj1.INRBal, accessToken: obj1.accessToken}), obj1.password ,function(err, Users){
        if (err) {
            console.log("Some error happened!");
        } else {
-           console.log("User info added!");
+           console.log("Users info added!");
        }
    }) 
 });
 
 app.get("/initiate2", function(req,res){
-   User.register(new User({username: obj2.username, BTCBal: obj2.BTCBal, INRBal:obj2.INRBal, accessToken: obj2.accessToken}), obj2.password ,function(err, user){
+   Users.register(new Users({Usersname: obj2.Usersname, BTCBal: obj2.BTCBal, INRBal:obj2.INRBal, accessToken: obj2.accessToken}), obj2.password ,function(err, Users){
        if (err) {
            console.log("Some error happened!");
        } else {
-           console.log("User info added!");
+           console.log("Users info added!");
        }
    }) 
 });
 
 app.get("/initiate3", function(req,res){
-   User.register(new User({username: obj3.username, BTCBal: obj3.BTCBal, INRBal:obj3.INRBal, accessToken: obj3.accessToken}), obj3.password ,function(err, user){
+   Users.register(new Users({Usersname: obj3.Usersname, BTCBal: obj3.BTCBal, INRBal:obj3.INRBal, accessToken: obj3.accessToken}), obj3.password ,function(err, Users){
        if (err) {
            console.log("Some error happened!");
        } else {
-           console.log("User info added!");
+           console.log("Users info added!");
        }
    }) 
 });

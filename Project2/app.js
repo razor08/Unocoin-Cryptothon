@@ -11,7 +11,7 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
-mongoose.connect("mongodb://localhost/unicoin3");
+mongoose.connect("mongodb://razor08:hailhydra<3@ds051655.mlab.com:51655/unocoin");
 app.use(flash());
 
 //Passport Configuration
@@ -116,7 +116,7 @@ app.get("/home",isLoggedIn ,function(req, res){
                username: foundUser.username,
                BTCBal: foundUser.BTCBal,
                INRBal: foundUser.INRBal,
-               authToken: foundUser.authToken
+               accessToken: foundUser.accessToken
            };
            res.render("index",{currentUser: req.user, foundUser:rtrn});
        }
